@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="KP.Import.WPApp.Pages.Start.StartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KP.Import.WPApp.Pages.Start"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:KP.Import.WPApp.Converters"
+    xmlns:s="using:KP.Import.WPApp.Services"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}, Path=ViewModel}">
+    <Page.Resources>
+        <!--<s:AppartmentService x:Key="AppartmentService"></s:AppartmentService>
+        <local:StartViewModel x:Key="ViewModel" GoToApparment="ViewModel_OnGoToApparment"></local:StartViewModel>-->
+
+        <c:NullableIntToStringConverter x:Key="NullableIntToString"/>
+        <c:MonthNameConverter x:Key="MonthName"/>
+        <c:AppartmentNameConverter x:Key="AppartmentNameConverter"></c:AppartmentNameConverter>
+        <c:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></c:BooleanToVisibilityConverter>
+    </Page.Resources>
+    <Grid>
+        <ProgressBar IsIndeterminate="{Binding IsBusy}" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Top" ></ProgressBar>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Показания" Style="{ThemeResource HeaderTextBlockStyle}"></TextBlock>
+            <StackPanel Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="10"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding AppartmentNumber, Mode=TwoWay, Converter={StaticResource NullableIntToString}, UpdateSourceTrigger=PropertyChanged}" Header="Номер квартиры" InputScope="Number" MaxLength="3"></TextBox>
+                <Button Grid.Column="2" Content="Проверить" Command="{Binding CheckAppartmentCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right"></Button>
+                </Grid>
+                    <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="{Binding Appartment, Converter={StaticResource AppartmentNameConverter}}"></TextBlock>
+                <ComboBox Header="Месяц" ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource MonthName}}"></TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox Text="{Binding SelectedYear, Mode=TwoWay}" Header="Год" InputScope="Number" MaxLength="4"></TextBox>
+                <Button Content="Далее" Command="{Binding GoToAppartmentCommand}"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
