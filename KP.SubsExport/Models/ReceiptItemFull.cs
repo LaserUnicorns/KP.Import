@@ -1,6 +1,9 @@
+using System.Diagnostics;
+
 namespace KP.SubsExport
 {
-    class ReceiptItemFull
+    [DebuggerDisplay("{ServiceCode} - {Amount}")]
+    public class ReceiptItemFull
     {
         public string Snils { get; set; }
         public string Organization { get; set; }

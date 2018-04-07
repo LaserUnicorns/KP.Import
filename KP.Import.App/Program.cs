@@ -12,9 +12,9 @@ namespace KP.Import.App
             var importer = new ReadingsImporter(
                 //$@"\\atlant\exchange\L_7605020213_A040F09B-CE3C-4354-A849-62D110630508.CSV",
                 //$@"\\atlant\exchange\P_{inn}_{Guid.NewGuid()}.csv",
-                @"C:\Users\Viktor\Downloads\L_7605020213_817489FC-2D0B-4B84-9D94-2F5F6F1D61AA.CSV",
+                @"C:\Users\Viktor\Downloads\L_7605020213_B1F7AFD1-DACF-4D75-AD17-CDBD4DCE9EB6.CSV",
                 $@"C:\Users\Viktor\Downloads\P_{inn}_{Guid.NewGuid()}.csv",
-                new DateTime(2018, 02, 28));
+                new DateTime(2018, 03, 31));
 
             //var importer = new PaymentsImporter(
             //    $@"G:\OneDrive\work\volga\201611\payments.csv",

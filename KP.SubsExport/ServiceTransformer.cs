@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KP.SubsExport
 {
-    class ServiceTransformer
+    public class ServiceTransformer
     {
         private readonly ISnilsMapFactory _snilsMap;
         private readonly IServiceCodeMapFactory _serviceCodeMap;
@@ -38,6 +38,13 @@ namespace KP.SubsExport
                     ServiceCode = _serviceCodeMap.GetServiceCode(x.ServiceCode, x.ODN),
                     Amount = x.Amount
 
+                })
+                .GroupBy(x => x.ServiceCode, x => x, (sc, xs) =>
+                {
+                    var xsList = xs as IList<ReceiptItemFull> ?? xs.ToList();
+                    var item = xsList.First();
+                    item.Amount = xsList.Sum(x => x.Amount);
+                    return item;
                 })
                 .ToList();
         }

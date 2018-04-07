@@ -14,11 +14,12 @@ namespace KP.SubsExport
             var dbPath = "C:\\IMAS\\KVARTPLATA\\DATA0.FDB";
             var dateService = new DateService();
             var workingPeriodService = new WorkingPeriodService(dateService);
+            var workingPeriod = workingPeriodService.GetWorkingPeriod();
             var snilsMapFactory = new SnilsMapFactory();
             var serviceCodeMapFactory = new ServiceCodeMapFactory();
 
-            var dbDal = new ImasDal(workingPeriodService, dbPath);
-            var dbList = dbDal.GetReceipt();
+            var imasDal = new ImasDal(workingPeriodService, dbPath);
+            var dbList = imasDal.GetReceipt();
 
             var mapper = new ServiceTransformer(snilsMapFactory, serviceCodeMapFactory);
             var fullList = mapper.Map(dbList);
@@ -44,6 +45,7 @@ namespace KP.SubsExport
             }
             File.Move(filename, targetFile);
 
+            Console.WriteLine($"{workingPeriod.Start:yyyy-MM-dd} - {workingPeriod.End:yyyy-MM-dd}");
             Console.WriteLine("done");
             Console.ReadLine();
         }

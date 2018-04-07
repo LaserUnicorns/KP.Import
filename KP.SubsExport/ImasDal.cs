@@ -75,7 +75,7 @@ namespace KP.SubsExport
                                     AccountNumber = r.GetString(r.GetOrdinal("NSCHET")),
                                     Flat = r.GetString(r.GetOrdinal("KVARTIRA")),
                                     RegisteredCount = r.GetInt32(r.GetOrdinal("PROPISANO")),
-                                    ServiceCode = r.GetInt32(r.GetOrdinal("KODTARIF")),
+                                    ServiceCode = (ImasServiceCode) r.GetInt32(r.GetOrdinal("KODTARIF")),
                                     ODN = r.GetString(r.GetOrdinal("KINDREG")),
                                     Amount = r.GetDecimal(r.GetOrdinal("SUMMA")),
                                 };
