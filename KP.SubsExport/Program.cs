@@ -11,6 +11,7 @@ namespace KP.SubsExport
     {
         static void Main(string[] args)
         {
+            var dataSource = "hephaestus";
             var dbPath = "C:\\IMAS\\KVARTPLATA\\DATA0.FDB";
             var dateService = new DateService();
             var workingPeriodService = new WorkingPeriodService(dateService);
@@ -18,7 +19,7 @@ namespace KP.SubsExport
             var snilsMapFactory = new SnilsMapFactory();
             var serviceCodeMapFactory = new ServiceCodeMapFactory();
 
-            var imasDal = new ImasDal(workingPeriodService, dbPath);
+            var imasDal = new ImasDal(workingPeriodService, dataSource, dbPath);
             var dbList = imasDal.GetReceipt();
 
             var mapper = new ServiceTransformer(snilsMapFactory, serviceCodeMapFactory);

@@ -9,13 +9,13 @@ namespace KP.SubsExport
 {
     class ImasDal
     {
-        static string MakeConnectionString(string db, string user, string password)
+        static string MakeConnectionString(string ds, string db, string user, string password)
         {
             return
                 $"User={user};" +
                 $"Password={password};" +
                 $"Database={db};" +
-                "DataSource=hephaestus;" +
+                $"DataSource={ds};" +
                 "Port=3050;" +
                 "Dialect=3;" +
                 "Charset=NONE;" +
@@ -33,13 +33,14 @@ namespace KP.SubsExport
 
         public ImasDal(
             IWorkingPeriodService workingPeriodService,
+            string ds,
             string db,
             string user = "sysdba",
             string password = "masterkey"
             )
         {
             _workingPeriodService = workingPeriodService;
-            _connectionString = MakeConnectionString(db, user, password);
+            _connectionString = MakeConnectionString(ds, db, user, password);
         }
 
         public List<DbReceiptItem> GetReceipt()
@@ -61,7 +62,7 @@ namespace KP.SubsExport
                         $"WHERE j.DATEREG >= '{workingPeriod.Start:yyyy-MM-dd}' " +
                         $"AND j.DATEREG < '{workingPeriod.End:yyyy-MM-dd}' " +
                         "AND j.PRINADLEJNOST = 'T' " +
-                        "AND ik.datak is null " +
+                        $"AND (ik.datak is null OR '{workingPeriod.Start:yyyy-MM-dd}' <= ik.datak) " +
                         "AND j.KODKARTA = 178 ";
 
                     using (var r = command.ExecuteReader())

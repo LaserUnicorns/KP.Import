@@ -22,7 +22,7 @@ namespace KP.SubsExport
                     [ImasServiceCode.Electricity] = "06",
                     [ImasServiceCode.Repair] = "01",
                     [ImasServiceCode.Gas] = "22",
-                    [ImasServiceCode.Garbage] = "03",
+                    [ImasServiceCode.Garbage] = "27",
                 },
                 ["101"] = new Dictionary<ImasServiceCode, string> // odn
                 {
