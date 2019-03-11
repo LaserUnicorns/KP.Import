@@ -39,13 +39,13 @@ namespace KP.SubsExport
                     Amount = x.Amount
 
                 })
-                .GroupBy(x => x.ServiceCode, x => x, (sc, xs) =>
-                {
-                    var xsList = xs as IList<ReceiptItemFull> ?? xs.ToList();
-                    var item = xsList.First();
-                    item.Amount = xsList.Sum(x => x.Amount);
-                    return item;
-                })
+                //.GroupBy(x => x.ServiceCode, x => x, (sc, xs) =>
+                //{
+                //    var xsList = xs as IList<ReceiptItemFull> ?? xs.ToList();
+                //    var item = xsList.First();
+                //    item.Amount = xsList.Sum(x => x.Amount);
+                //    return item;
+                //})
                 .ToList();
         }
     }

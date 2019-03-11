@@ -55,15 +55,17 @@ namespace KP.SubsExport
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText =
-                        "SELECT k.NSCHET, k.KVARTIRA, ik.PROPISANO, j.KODTARIF, j.SUMMA, j.KINDREG " +
+                        "SELECT k.NSCHET, k.KVARTIRA, max(ik.PROPISANO) as PROPISANO, j.KODTARIF, sum(j.SUMMA) as SUMMA " +
                         "FROM JOURNAL j " +
                         "JOIN KARTA k ON k.KODKARTA = j.KODKARTA " +
                         "JOIN INDKARTA ik ON ik.KODKARTA = k.KODKARTA " +
                         $"WHERE j.DATEREG >= '{workingPeriod.Start:yyyy-MM-dd}' " +
                         $"AND j.DATEREG < '{workingPeriod.End:yyyy-MM-dd}' " +
                         "AND j.PRINADLEJNOST = 'T' " +
-                        $"AND (ik.datak is null OR '{workingPeriod.Start:yyyy-MM-dd}' <= ik.datak) " +
-                        "AND j.KODKARTA = 178 ";
+                        $"AND (ik.datak is null OR '{workingPeriod.End:yyyy-MM-dd}' <= ik.datak) " +
+                        $"AND j.KODKARTA IN (178, 81) " +
+                        "GROUP BY k.NSCHET, k.KVARTIRA, j.KODTARIF "
+                        ;
 
                     using (var r = command.ExecuteReader())
                     {
@@ -77,7 +79,8 @@ namespace KP.SubsExport
                                     Flat = r.GetString(r.GetOrdinal("KVARTIRA")),
                                     RegisteredCount = r.GetInt32(r.GetOrdinal("PROPISANO")),
                                     ServiceCode = (ImasServiceCode) r.GetInt32(r.GetOrdinal("KODTARIF")),
-                                    ODN = r.GetString(r.GetOrdinal("KINDREG")),
+                                    //ODN = r.GetString(r.GetOrdinal("KINDREG")),
+                                    ODN = "",
                                     Amount = r.GetDecimal(r.GetOrdinal("SUMMA")),
                                 };
 

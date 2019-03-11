@@ -11,7 +11,8 @@ namespace KP.SubsExport
         private readonly Dictionary<string, string> _snilsMap = 
             new Dictionary<string, string>
             {
-                ["461702100"] = "133-041-479-12"
+                ["461702100"] = "133-041-479-12",
+                ["461702006"] = "073-277-528-78",
             }; 
 
         public Dictionary<string, string> GetSnilsMap()
